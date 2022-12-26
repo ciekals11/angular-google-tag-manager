@@ -1,5 +1,5 @@
 {
-  "name": "angular-google-tag-manager",
+  "name": "@ciekals11/angular-google-tag-manager",
   "version": "1.7.0",
   "license": "MIT",
   "repository": {
@@ -30,7 +30,6 @@
     "lint:lib": "ng lint angular-google-tag-manager",
     "version": "ng version"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~15.0.2",
     "@angular/common": "~15.0.2",
@@ -63,5 +62,10 @@
     "protractor": "~7.0.0",
     "ts-node": "~10.9.1",
     "typescript": "~4.8.4"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mzuccaroli/angular-google-tag-manager/issues"
+  },
+  "homepage": "https://github.com/mzuccaroli/angular-google-tag-manager#readme",
+  "main": "index.js"
 }
