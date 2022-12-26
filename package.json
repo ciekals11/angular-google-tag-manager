@@ -1,6 +1,6 @@
 {
   "name": "@ciekals11/angular-google-tag-manager",
-  "version": "1.7.0",
+  "version": "1.7.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build:demo-application": "ng build demo-application",
-    "build:lib": "ng build angular-google-tag-manager",
-    "build:lib:prod": "ng build angular-google-tag-manager --configuration=production",
-    "test:lib": "ng test angular-google-tag-manager",
-    "lint:lib": "ng lint angular-google-tag-manager",
+    "build:lib": "ng build @ciekals11/angular-google-tag-manager",
+    "build:lib:prod": "ng build @ciekals11/angular-google-tag-manager --configuration=production",
+    "test:lib": "ng test @ciekals11/angular-google-tag-manager",
+    "lint:lib": "ng lint @ciekals11/angular-google-tag-manager",
     "version": "ng version"
   },
   "dependencies": {

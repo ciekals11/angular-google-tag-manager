@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-google-tag-manager": {
+    "@ciekals11/angular-google-tag-manager": {
       "projectType": "library",
       "root": "projects/angular-google-tag-manager",
       "sourceRoot": "projects/angular-google-tag-manager/src",

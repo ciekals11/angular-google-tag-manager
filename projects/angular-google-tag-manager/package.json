@@ -1,6 +1,6 @@
 {
-  "name": "angular-google-tag-manager",
-  "version": "1.7.0",
+  "name": "@ciekals11/angular-google-tag-manager",
+  "version": "1.7.4",
   "license": "MIT",
   "repository": {
     "type": "git",

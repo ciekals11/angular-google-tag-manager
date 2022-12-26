@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnInit, Optional, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { GoogleTagManagerConfiguration } from './angular-google-tag-manager-config.service';
 import { GoogleTagManagerConfig } from './google-tag-manager-config';
 import { isPlatformBrowser } from "@angular/common";
@@ -6,7 +6,7 @@ import { isPlatformBrowser } from "@angular/common";
 @Injectable({
   providedIn: 'root',
 })
-export class GoogleTagManagerService implements OnInit {
+export class GoogleTagManagerService {
   private isLoaded = false;
   private readonly config: GoogleTagManagerConfig | null;
 
@@ -39,6 +39,17 @@ export class GoogleTagManagerService implements OnInit {
     @Inject(PLATFORM_ID)
     private platformId: Object
   ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.browserGlobals = {
+        windowRef(): any {
+          return window;
+        },
+        documentRef(): any {
+          return document;
+        },
+      };
+    }
+
     this.config = this.googleTagManagerConfiguration?.get();
     if (this.config == null) {
       this.config = {id: null};
@@ -54,19 +65,6 @@ export class GoogleTagManagerService implements OnInit {
     };
     if (this.config.id == null) {
       throw new Error('Google tag manager ID not provided.');
-    }
-  }
-
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.browserGlobals = {
-        windowRef(): any {
-          return window;
-        },
-        documentRef(): any {
-          return document;
-        },
-      };
     }
   }
 
