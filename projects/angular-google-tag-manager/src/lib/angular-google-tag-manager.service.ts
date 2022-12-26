@@ -1,20 +1,20 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, OnInit, Optional, PLATFORM_ID } from '@angular/core';
 import { GoogleTagManagerConfiguration } from './angular-google-tag-manager-config.service';
 import { GoogleTagManagerConfig } from './google-tag-manager-config';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GoogleTagManagerService {
+export class GoogleTagManagerService implements OnInit {
   private isLoaded = false;
-  private config: GoogleTagManagerConfig | null;
+  private readonly config: GoogleTagManagerConfig | null;
 
   private browserGlobals = {
     windowRef(): any {
-      return window;
+      return null;
     },
     documentRef(): any {
-      return document;
+      return null;
     },
   };
 
@@ -34,11 +34,13 @@ export class GoogleTagManagerService {
     public googleTagManagerResourcePath: string,
     @Optional()
     @Inject('googleTagManagerCSPNonce')
-    public googleTagManagerCSPNonce: string
+    public googleTagManagerCSPNonce: string,
+    @Inject(PLATFORM_ID)
+    private platformId: Object
   ) {
     this.config = this.googleTagManagerConfiguration?.get();
     if (this.config == null) {
-      this.config = { id: null };
+      this.config = {id: null};
     }
 
     this.config = {
@@ -54,8 +56,19 @@ export class GoogleTagManagerService {
     }
   }
 
+  ngOnInit() {
+    this.browserGlobals = {
+      windowRef(): any {
+        return window;
+      },
+      documentRef(): any {
+        return document;
+      },
+    };
+  }
+
   public getDataLayer(): any[] {
-    const window = this.browserGlobals.windowRef();
+    const window = this.browserGlobals.windowRef() ?? {dataLayer: []};
     window.dataLayer = window.dataLayer || [];
     return window.dataLayer;
   }
@@ -71,6 +84,11 @@ export class GoogleTagManagerService {
         return resolve(this.isLoaded);
       }
       const doc = this.browserGlobals.documentRef();
+
+      if (doc === null) {
+        return resolve(false);
+      }
+
       this.pushOnDataLayer({
         'gtm.start': new Date().getTime(),
         event: 'gtm.js',
@@ -122,7 +140,7 @@ export class GoogleTagManagerService {
       url +
       Object.keys(this.config)
         .filter((k) => this.config[k])
-        .map((k) => `${k}=${this.config[k]}`)
+        .map((k) => `${ k }=${ this.config[k] }`)
         .join('&')
     );
   }
