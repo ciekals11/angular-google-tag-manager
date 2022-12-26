@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnInit, Optional, PLATFORM_ID } from '@angular/core';
 import { GoogleTagManagerConfiguration } from './angular-google-tag-manager-config.service';
 import { GoogleTagManagerConfig } from './google-tag-manager-config';
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
   providedIn: 'root',
@@ -57,14 +58,16 @@ export class GoogleTagManagerService implements OnInit {
   }
 
   ngOnInit() {
-    this.browserGlobals = {
-      windowRef(): any {
-        return window;
-      },
-      documentRef(): any {
-        return document;
-      },
-    };
+    if (isPlatformBrowser(this.platformId)) {
+      this.browserGlobals = {
+        windowRef(): any {
+          return window;
+        },
+        documentRef(): any {
+          return document;
+        },
+      };
+    }
   }
 
   public getDataLayer(): any[] {
